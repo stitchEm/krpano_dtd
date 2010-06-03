@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT krpano (image | preview | display | view | area | action  )* > <!--   | plugin | hotspot | events | action | control -->
+
+<!-- refactore blendmode -->
+
+<!ELEMENT krpano (image | preview | display | view | area | action | plugin | hotspot | events | control | style | progress | autorotate | contextmenu | memory | network | textstyle | data | include )* > <!--    -->
 <!ATTLIST krpano
 	version CDATA "1.0.8" 
-	onstart CDATA ""
+	onstart CDATA "null"
 	logkey  (true | false) "false"
 	actionintervalbase (timer | frame) "timer" >
 	
@@ -12,7 +15,7 @@
 	tiled 				(true | false) 									"false" 
 	multires 			(true | false) 									"false"
 	tiledimagewidth 	CDATA 											#IMPLIED
-	tilesize			CDATA 											#IMPLIED
+	tilesize			CDATA 											#REQUIRED
 	hfov 				CDATA 											"360"
 	vfov 				CDATA											#IMPLIED
 	voffset				CDATA											"0"
@@ -22,7 +25,7 @@
 <!ELEMENT preview 		(#PCDATA)>
 <!ATTLIST preview
 	type 				(SPHERE | CUBESTRIP | grid) 	"SPHERE"
-	url					CDATA							#IMPLIED
+	url					CDATA							#REQUIRED
 	striporder  		CDATA							"LFRBUP"
 	details				CDATA							"8" >
 
@@ -70,7 +73,7 @@
 	 
 <!ELEMENT action ANY>
 <!ATTLIST action
-	name 				CDATA 							#IMPLIED
+	name 				CDATA 							#REQUIRED
 	>
 	
 <!ELEMENT events EMPTY>
@@ -92,20 +95,174 @@
 	onviewchange					CDATA 							#IMPLIED
 	>
 
-<!ELEMENT zoomify EMPTY>
-<!ATTLIST zoomify
-	url				 				CDATA 							#IMPLIED
-	setview							( true | false ) 				"true" >
-
 <!ELEMENT style EMPTY>
 <!ATTLIST style
-	name				 				CDATA 						#IMPLIED
+	name				 			CDATA 							#REQUIRED
 	>
 
+<!ELEMENT progress EMPTY>
+<!ATTLIST progress
+	showload				 		CDATA 							"bar(origin,width,height,offsetx,offsety,style,backcolor,loadcolor,decodecolor,bordercolor,borderwidth,glowcolor,glowwidth)"
+	showwait				 		CDATA 							"loopings(color,points,size,bigpoint,smallpoint,glowcolor,glowwidth,xpos,ypos)"
+	>
+
+<!ELEMENT autorotate EMPTY>
+<!ATTLIST autorotate
+	enabled				 			( true | false ) 				"true"
+	waittime						CDATA							"1.5"
+	accel							CDATA							"1"
+	speed							CDATA							"10"
+	horizon							CDATA							"0"
+	tofov							CDATA							"off"
+	>
+
+<!ELEMENT contextmenu (item)* >
+<!ATTLIST contextmenu
+	fullscreen				 		( true | false ) 				"true"
+	>
+
+<!ELEMENT control EMPTY>
+<!ATTLIST control
+	usercontrol			 			(all | keyb | mouse | off) 		"all"
+	mousetype						(drag2d | drag3d | moveto)		"drag2d"
+	movetocursor					( null | vector | arrow)		"null"
+	cursorsize						CDATA							"10"
+	mouseaccelerate					CDATA							"1.00"
+	mousespeed						CDATA							"10.00"
+	mousefriction					CDATA							"0.80"
+	keybaccelerate					CDATA							"0.50"
+	keybspeed						CDATA							"10.00"
+	keybfriction					CDATA							"0.90"
+	keybinvert						( true | false )				"false"
+	mousefovchange					CDATA							"1.00"
+	keybfovchange					CDATA							"1.00"
+	fovspeed						CDATA							"3.0"
+	fovfriction						CDATA							"0.90" 
+	keycodesleft					CDATA							"37"
+	keycodesright					CDATA							"39"
+	keycodesup						CDATA							"38"
+	keycodesdown					CDATA							"40"
+	keycodesin						CDATA							"16,65,107"
+	keycodesout						CDATA							"17,89,90,109"
+	headswing						CDATA							"0"
+	>
+	
+<!ELEMENT plugin ANY>
+<!ATTLIST plugin
+	name				 			CDATA 							#IMPLIED
+	url					 			CDATA 							#IMPLIED
+	visible							(true | false)					"true"
+	enabled							(true | false)					"true"
+	capture							(true | false)					"true"
+	children						(true | false)					"true"
+	handcursor						(true | false)					"true"
+	keep 							(true | false)					"false"
+	zorder							CDATA							"0"
+	alpha							CDATA							"1"
+	blendmode						(normal|add|difference|multiply|screen) "normal"
+	align							( lefttop | left | leftbottom | top | center | bottom | righttop | right | rightbottom ) "bottom"
+	edge							( same_as_origin | lefttop | left | leftbottom | top | center | bottom | righttop | right | rightbottom ) "same_as_origin"
+	ath								CDATA							"0"
+	atv								CDATA							"0"
+	width							CDATA							#IMPLIED
+	height							CDATA							#IMPLIED
+	scale							CDATA							"1"
+	smoothing						(true | false)					"true"
+	zoom							(true | false)					"false"
+	onover							CDATA							#IMPLIED
+	onhover							CDATA							#IMPLIED
+	onout							CDATA							#IMPLIED
+	onclick							CDATA							#IMPLIED
+	ondown							CDATA							#IMPLIED
+	onup							CDATA							#IMPLIED
+	onloaded						CDATA							#IMPLIED
+	>
+	
+<!ELEMENT hotspot (point)* >
+<!ATTLIST hotspot
+	name				 			CDATA 							#IMPLIED
+	url					 			CDATA 							#IMPLIED
+	visible							(true | false)					"true"
+	enabled							(true | false)					"true"
+	capture							(true | false)					"true"
+	children						(true | false)					"true"
+	handcursor						(true | false)					"true"
+	keep 							(true | false)					"false"
+	zorder							CDATA							"0"
+	alpha							CDATA							"1"
+	blendmode						(normal|add|difference|multiply|screen) "normal"
+	align							( lefttop | left | leftbottom | top | center | bottom | righttop | right | rightbottom ) "bottom"
+	edge							( same_as_origin | lefttop | left | leftbottom | top | center | bottom | righttop | right | rightbottom ) "same_as_origin"
+	ath								CDATA							"0"
+	atv								CDATA							"0"
+	width							CDATA							#IMPLIED
+	height							CDATA							#IMPLIED
+	scale							CDATA							"1"
+	smoothing						(true | false)					"true"
+	zoom							(true | false)					"false"
+	onover							CDATA							#IMPLIED
+	onhover							CDATA							#IMPLIED
+	onout							CDATA							#IMPLIED
+	onclick							CDATA							#IMPLIED
+	ondown							CDATA							#IMPLIED
+	onup							CDATA							#IMPLIED
+	onloaded						CDATA							#IMPLIED
+	>
+
+<!ELEMENT memory EMPTY>
+<!ATTLIST memory
+	maxmem				 			CDATA 							"350"
+	>
+
+<!ELEMENT network EMPTY>
+<!ATTLIST network
+	downloadqueues				 			CDATA 					"4"
+	decodequeues				 			CDATA 					"2"
+	>
+
+<!ELEMENT textstyle EMPTY>
+<!ATTLIST textstyle
+	name				 			CDATA 							#REQUIRED
+	font			 				CDATA 							#IMPLIED
+	fontsize		 				CDATA 							#IMPLIED
+	blod							(true | false )					"false"
+	italic							(true | false )					"false"
+	background						(true | false )					"false"
+	backgroundcolor					CDATA							"0xFFFFFF"
+	border							(true | false)					"false"
+	bordercolor						CDATA							"0xFFFFFF"
+	textcolor						CDATA							"0x000000"
+	alpha							CDATA							"1"
+	blendmode						(normal|add|difference|multiply|screen) "normal"
+	effect							CDATA							"glow(color,alpha,range,strength); dropshadow(depth,angle,color,range,strength); blur(radius);"
+	origin							(cursor | lefttop | left | leftbottom | top | center | bottom | righttop | right | rightbottom ) "cursor"
+	edge							( lefttop | left | leftbottom | top | center | bottom | righttop | right | rightbottom ) "bottom"
+	textalign						( none | left | center | right ) "none"
+	xoffset							CDATA							"0"
+	yoffset							CDATA							"-3"
+	noclip							( true | false )				"true"
+	showtime						CDATA							"0.1"
+	>
+	
+<!ELEMENT data ANY>
+<!ATTLIST data
+	name				 				CDATA 							#REQUIRED
+	>
+	
+<!ELEMENT include EMPTY>
+<!ATTLIST include
+	url				 				CDATA 							#REQUIRED
+	>
+	
 <!ELEMENT qtvr EMPTY>
 <!ATTLIST qtvr
-	url				 				CDATA 							#IMPLIED
+	url				 				CDATA 							#REQUIRED
 	setview							( true | false ) 				"true" >
+
+<!ELEMENT point EMPTY>
+<!ATTLIST point
+	ath 							CDATA 							"0"
+	atv								CDATA 							"0" >
 
 <!ELEMENT level ANY>
 <!ATTLIST level
@@ -114,3 +271,20 @@
 	
 <!ELEMENT mobile ANY>
 <!ELEMENT tablet ANY>
+
+
+<!ELEMENT item EMPTY>
+<!ATTLIST item
+	name				 			CDATA 							#IMPLIED
+	caption							CDATA							#IMPLIED
+	separator						( true | false )				"false"
+	enabled							( true | false )				"true"
+	visible							( true | false )				"true"
+	onclick							CDATA							"action();"
+	>
+
+
+<!ELEMENT zoomify EMPTY>
+<!ATTLIST zoomify
+	url				 				CDATA 							#IMPLIED
+	setview							( true | false ) 				"true" >
