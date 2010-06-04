@@ -2,12 +2,13 @@
 
 <!-- refactore blendmode -->
 
-<!ELEMENT krpano (image | preview | display | view | area | action | plugin | hotspot | events | control | style | progress | autorotate | contextmenu | memory | network | textstyle | data | include )* > <!--    -->
+<!ELEMENT krpano (image | preview | display | view | area | action | plugin | hotspot | events | control | style | progress | autorotate | contextmenu | memory | network | textstyle | data | include | scene )* > <!--    -->
 <!ATTLIST krpano
 	version CDATA "1.0.8" 
 	onstart CDATA "null"
 	logkey  (true | false) "false"
-	actionintervalbase (timer | frame) "timer" >
+	actionintervalbase (timer | frame) "timer"
+	showerrors (true | false) "true"	>
 	
 <!ELEMENT image 		(level | mobile | tablet | qtvr)* >
 <!ATTLIST image
@@ -24,10 +25,16 @@
 
 <!ELEMENT preview 		(#PCDATA)>
 <!ATTLIST preview
-	type 				(SPHERE | CUBESTRIP | grid) 	"SPHERE"
+	type 				(SPHERE | CUBESTRIP | grid ) 	"SPHERE"
 	url					CDATA							#REQUIRED
 	striporder  		CDATA							"LFRBUP"
 	details				CDATA							"8" >
+	
+<!ELEMENT scene 		(#PCDATA)>
+<!ATTLIST scene
+	name 				CDATA					 		#REQUIRED
+	onstart					CDATA							#IMPLIED
+	>
 
 <!ELEMENT display EMPTY>
 <!ATTLIST display
@@ -104,6 +111,7 @@
 <!ATTLIST progress
 	showload				 		CDATA 							"bar(origin,width,height,offsetx,offsety,style,backcolor,loadcolor,decodecolor,bordercolor,borderwidth,glowcolor,glowwidth)"
 	showwait				 		CDATA 							"loopings(color,points,size,bigpoint,smallpoint,glowcolor,glowwidth,xpos,ypos)"
+	showreload						(true|false)					"false"
 	>
 
 <!ELEMENT autorotate EMPTY>
@@ -155,6 +163,8 @@
 	enabled							(true | false)					"true"
 	capture							(true | false)					"true"
 	children						(true | false)					"true"
+	parent							CDATA 							#IMPLIED
+	scalechildren					(true | false)					"false"	
 	handcursor						(true | false)					"true"
 	keep 							(true | false)					"false"
 	zorder							CDATA							"0"
@@ -176,6 +186,7 @@
 	ondown							CDATA							#IMPLIED
 	onup							CDATA							#IMPLIED
 	onloaded						CDATA							#IMPLIED
+	crop							CDATA							#IMPLIED
 	>
 	
 <!ELEMENT hotspot (point)* >
@@ -186,6 +197,8 @@
 	enabled							(true | false)					"true"
 	capture							(true | false)					"true"
 	children						(true | false)					"true"
+	parent							CDATA 							#IMPLIED
+	scalechildren					(true | false)					"false"
 	handcursor						(true | false)					"true"
 	keep 							(true | false)					"false"
 	zorder							CDATA							"0"
@@ -207,6 +220,12 @@
 	ondown							CDATA							#IMPLIED
 	onup							CDATA							#IMPLIED
 	onloaded						CDATA							#IMPLIED
+	crop							CDATA							#IMPLIED
+	distorted						(true | false)					"false"
+	rx								CDATA							#IMPLIED
+	ry								CDATA							#IMPLIED
+	rz								CDATA							#IMPLIED
+	flying							CDATA							#IMPLIED
 	>
 
 <!ELEMENT memory EMPTY>
@@ -218,6 +237,8 @@
 <!ATTLIST network
 	downloadqueues				 			CDATA 					"4"
 	decodequeues				 			CDATA 					"2"
+	caching						 			(true |false)			"true"
+	cachesize 				 				CDATA 					"10"
 	>
 
 <!ELEMENT textstyle EMPTY>
@@ -242,6 +263,8 @@
 	yoffset							CDATA							"-3"
 	noclip							( true | false )				"true"
 	showtime						CDATA							"0.1"
+	fadetime						CDATA							"0"
+	fadeintime						CDATA							"0"
 	>
 	
 <!ELEMENT data ANY>
