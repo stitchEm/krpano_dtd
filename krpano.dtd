@@ -9,7 +9,7 @@
 	logkey  (true | false) "false"
 	actionintervalbase (timer | frame) "timer"
 	showerrors (true | false) "true"	>
-	
+
 <!ELEMENT image 		(level | mobile | tablet | qtvr)* >
 <!ATTLIST image
 	type 				(SPHERE | CUBE | CUBESTRIP | ZOOMIFY | QTVR ) 	"SPHERE"
