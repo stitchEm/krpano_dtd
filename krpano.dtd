@@ -2,7 +2,7 @@
 
 <!-- refactore blendmode -->
 
-<!ELEMENT krpano (image | preview | display | view | area | action | plugin | hotspot | events | control | style | progress | autorotate | contextmenu | memory | network | textstyle | data | include | scene )* > <!--    -->
+<!ELEMENT krpano (image | preview | display | view | area | action | plugin | hotspot | events | control | style | progress | autorotate | contextmenu | memory | network | textstyle | data | include | scene | security | lensflareset )* > <!--    -->
 <!ATTLIST krpano
 	version CDATA "1.0.8" 
 	onstart CDATA "null"
@@ -111,7 +111,7 @@
 <!ATTLIST progress
 	showload				 		CDATA 							"bar(origin,width,height,offsetx,offsety,style,backcolor,loadcolor,decodecolor,bordercolor,borderwidth,glowcolor,glowwidth)"
 	showwait				 		CDATA 							"loopings(color,points,size,bigpoint,smallpoint,glowcolor,glowwidth,xpos,ypos)"
-	showreload						(true|false)					"false"
+	showreloads						(true|false)					"false"
 	>
 
 <!ELEMENT autorotate EMPTY>
@@ -153,6 +153,9 @@
 	keycodesin						CDATA							"16,65,107"
 	keycodesout						CDATA							"17,89,90,109"
 	headswing						CDATA							"0"
+	touchfriction					CDATA							"0.87"
+	zoomtocursor					( true | false )				"false"
+	zoomoutcursor 					( true | false )				"true"
 	>
 	
 <!ELEMENT plugin ANY>
@@ -187,6 +190,8 @@
 	onup							CDATA							#IMPLIED
 	onloaded						CDATA							#IMPLIED
 	crop							CDATA							#IMPLIED
+
+	rootpath						CDATA							"%SWFPATH%/"
 	>
 	
 <!ELEMENT hotspot (point)* >
@@ -197,7 +202,7 @@
 	enabled							(true | false)					"true"
 	capture							(true | false)					"true"
 	children						(true | false)					"true"
-	parent							CDATA 							#IMPLIED
+	parent							(STAGE | BGLAYER | any_plugin)	#IMPLIED
 	scalechildren					(true | false)					"false"
 	handcursor						(true | false)					"true"
 	keep 							(true | false)					"false"
@@ -228,6 +233,17 @@
 	flying							CDATA							#IMPLIED
 	>
 
+<!ELEMENT security (crossdomainxml | allowdomain )*>
+
+<!ELEMENT crossdomainxml EMPTY>
+<!ATTLIST crossdomainxml
+	url					 			CDATA 							"crossdomain.xml"
+	>
+<!ELEMENT allowdomain EMPTY>
+<!ATTLIST allowdomain 
+	domain					 		CDATA 							"http://domain.com"
+	>
+
 <!ELEMENT memory EMPTY>
 <!ATTLIST memory
 	maxmem				 			CDATA 							"350"
@@ -239,6 +255,22 @@
 	decodequeues				 			CDATA 					"2"
 	caching						 			(true |false)			"true"
 	cachesize 				 				CDATA 					"10"
+	>
+	
+<!ELEMENT lensflareset (flare)* >
+<!ATTLIST lensflareset
+	name				 			CDATA 					#IMPLIED
+	url					 			CDATA 					#IMPLIED
+	>
+	
+<!ELEMENT flare EMPTY >
+<!ATTLIST flare
+	pixsize				 			CDATA 					"0"
+	pixupos				 			CDATA 					"0"
+	pixvpos				 			CDATA					"0"
+	color 			 				CDATA 					"0xFFFFFF"
+	pos 			 				CDATA 					"0"
+	scale 			 				CDATA 					"1"
 	>
 
 <!ELEMENT textstyle EMPTY>
