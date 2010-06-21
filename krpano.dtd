@@ -2,6 +2,64 @@
 
 <!ENTITY % blendmode "normal|add|difference|multiply|screen">
 <!ENTITY % align "lefttop|left|leftbottom|top|center|bottom|righttop|right|rightbottom">
+<!ENTITY % plugin_hotspot_common 
+		'style 							CDATA 							#IMPLIED
+		name				 			CDATA 							#IMPLIED
+		url					 			CDATA 							#IMPLIED
+		visible							(true | false)					"true"
+		enabled							(true | false)					"true"
+		capture							(true | false)					"true"
+		onover							CDATA							#IMPLIED
+		onhover							CDATA							#IMPLIED
+		onout							CDATA							#IMPLIED
+		onclick							CDATA							#IMPLIED
+		ondown							CDATA							#IMPLIED
+		onup							CDATA							#IMPLIED
+		onloaded						CDATA							#IMPLIED
+		rotate							CDATA							"0"
+		blendmode						( %blendmode; ) 				"normal"
+		align							( %align; )						"bottom"
+		keep 							(true | false)					"false"
+		zorder							CDATA							"0"
+		alpha							CDATA							"1"
+		effect							CDATA							"glow(0x000000,0.7,4,2);dropshadow(10,45,0x000000,3,0.5);"
+		children						(true | false)					"true"
+		parent							(STAGE | BGLAYER | any_plugin)	#IMPLIED
+		scalechildren					(true | false)					"false"
+		handcursor						(true | false)					"true"
+		edge							( same_as_origin | %align; ) 	"same_as_origin"
+		width							CDATA							#IMPLIED
+		height							CDATA							#IMPLIED
+		scale							CDATA							"1"
+		smoothing						(true | false)					"true"
+		crop							CDATA							#IMPLIED
+		scale9grid						CDATA							"x|y|width|height"
+		'
+		>
+		
+<!ENTITY % hotspot_only 
+		'distorted						(true | false)					"false"
+		zoom							(true | false)					"false"
+		ath								CDATA							"0"
+		atv								CDATA							"0"
+		ox								CDATA							"0"
+		oy								CDATA							"0"
+		rx								CDATA							#IMPLIED
+		ry								CDATA							#IMPLIED
+		rz								CDATA							#IMPLIED
+		flying							CDATA							#IMPLIED
+		'
+		>		
+		
+<!ENTITY % plugin_only 
+		'x								CDATA							#IMPLIED
+		y								CDATA							#IMPLIED
+		preload							(true | false)					"false"
+		rootpath						CDATA							#IMPLIED
+		volume							CDATA							#IMPLIED
+		mute							(true | false)					"false"
+		'
+		>
 
 <!ELEMENT krpano (image | preview | display | view | area | action | plugin | hotspot | events | control | style | progress | autorotate | contextmenu | memory | network | textstyle | data | include | scene | security | lensflareset )* > <!--    -->
 <!ATTLIST krpano
@@ -12,7 +70,7 @@
 	showerrors (true | false) "true"
 	debugmode (true | false) "false"	>
 
-<!ELEMENT action (#PCDATA | delayedcall | set | switch )*>
+<!ELEMENT action (#PCDATA | delayedcall | set | switch | txtadd | trace )*>
 <!ATTLIST action
 	name 				CDATA 							#REQUIRED
 	>	
@@ -106,7 +164,9 @@
 
 <!ELEMENT style EMPTY>
 <!ATTLIST style
-	name				 			CDATA 							#REQUIRED
+	%plugin_only;
+	%hotspot_only;
+	%plugin_hotspot_common;
 	>
 
 <!ELEMENT progress EMPTY>
@@ -162,84 +222,14 @@
 	
 <!ELEMENT plugin ANY>
 <!ATTLIST plugin
-	name				 			CDATA 							#IMPLIED
-	url					 			CDATA 							#IMPLIED
-	visible							(true | false)					"true"
-	enabled							(true | false)					"true"
-	capture							(true | false)					"true"
-	children						(true | false)					"true"
-	parent							CDATA 							#IMPLIED
-	scalechildren					(true | false)					"false"	
-	handcursor						(true | false)					"true"
-	keep 							(true | false)					"false"
-	zorder							CDATA							"0"
-	alpha							CDATA							"1"
-	blendmode						( %blendmode; )					"normal"
-	align							( %align; ) 					"bottom"
-	edge							( same_as_origin | lefttop | left | leftbottom | top | center | bottom | righttop | right | rightbottom ) "same_as_origin"
-	ath								CDATA							"0"
-	atv								CDATA							"0"
-	width							CDATA							#IMPLIED
-	height							CDATA							#IMPLIED
-	scale							CDATA							"1"
-	smoothing						(true | false)					"true"
-	zoom							(true | false)					"false"
-	onover							CDATA							#IMPLIED
-	onhover							CDATA							#IMPLIED
-	onout							CDATA							#IMPLIED
-	onclick							CDATA							#IMPLIED
-	ondown							CDATA							#IMPLIED
-	onup							CDATA							#IMPLIED
-	onloaded						CDATA							#IMPLIED
-	crop							CDATA							#IMPLIED
-	scale9grid						CDATA							"x|y|width|height"	
-	rotate							CDATA							"0"
-	preload							(true | false)					"false"
-
-	rootpath						CDATA							"%SWFPATH%/"
-	volume							CDATA							#IMPLIED
-	mute							(true | false)					"false"
+	%plugin_hotspot_common;
+	%plugin_only;
 	>
 	
 <!ELEMENT hotspot (point)* >
 <!ATTLIST hotspot
-	name				 			CDATA 							#IMPLIED
-	url					 			CDATA 							#IMPLIED
-	visible							(true | false)					"true"
-	enabled							(true | false)					"true"
-	capture							(true | false)					"true"
-	children						(true | false)					"true"
-	parent							(STAGE | BGLAYER | any_plugin)	#IMPLIED
-	scalechildren					(true | false)					"false"
-	handcursor						(true | false)					"true"
-	keep 							(true | false)					"false"
-	zorder							CDATA							"0"
-	alpha							CDATA							"1"
-	blendmode						( %blendmode; ) 				"normal"
-	align							( %align; )						"bottom"
-	edge							( same_as_origin | %align; ) 	"same_as_origin"
-	ath								CDATA							"0"
-	atv								CDATA							"0"
-	width							CDATA							#IMPLIED
-	height							CDATA							#IMPLIED
-	scale							CDATA							"1"
-	smoothing						(true | false)					"true"
-	zoom							(true | false)					"false"
-	onover							CDATA							#IMPLIED
-	onhover							CDATA							#IMPLIED
-	onout							CDATA							#IMPLIED
-	onclick							CDATA							#IMPLIED
-	ondown							CDATA							#IMPLIED
-	onup							CDATA							#IMPLIED
-	onloaded						CDATA							#IMPLIED
-	crop							CDATA							#IMPLIED
-	distorted						(true | false)					"false"
-	rx								CDATA							#IMPLIED
-	ry								CDATA							#IMPLIED
-	rz								CDATA							#IMPLIED
-	flying							CDATA							#IMPLIED
-	scale9grid						CDATA							"x|y|width|height"
-	rotate							CDATA							"0"
+	%hotspot_only;
+	%plugin_hotspot_common;
 	>
 
 <!ELEMENT security (crossdomainxml | allowdomain )*>
