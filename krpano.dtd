@@ -33,7 +33,13 @@
 		scale							CDATA							"1"
 		smoothing						(true | false)					"true"
 		crop							CDATA							#IMPLIED
+		overcrop						CDATA							#IMPLIED
+		downcrop						CDATA							#IMPLIED
 		scale9grid						CDATA							"x|y|width|height"
+		preload							(true | false)					"false"
+		ox								CDATA							"0"
+		oy								CDATA							"0"
+		usecontentsize					(true | false)					"false"
 		'
 		>
 		
@@ -42,19 +48,22 @@
 		zoom							(true | false)					"false"
 		ath								CDATA							"0"
 		atv								CDATA							"0"
-		ox								CDATA							"0"
-		oy								CDATA							"0"
 		rx								CDATA							#IMPLIED
 		ry								CDATA							#IMPLIED
 		rz								CDATA							#IMPLIED
 		flying							CDATA							#IMPLIED
+		details							CDATA							#IMPLIED
+		inverserotation					(true | false)					"false"
+		ismovie							(true | false)					"false"
+		refreshrate						CDATA							"auto"
 		'
 		>		
 		
 <!ENTITY % plugin_only 
 		'x								CDATA							#IMPLIED
 		y								CDATA							#IMPLIED
-		preload							(true | false)					"false"
+		accuracy						CDATA							"0"
+		
 		rootpath						CDATA							#IMPLIED
 		volume							CDATA							#IMPLIED
 		mute							(true | false)					"false"
@@ -133,7 +142,7 @@
 	vlookatmax			CDATA							"+90"
 	maxpixelzoom		CDATA							"1.0"
 	pannini				(true | false)					"false"
-	limitview			(fullrange | offrange)			#IMPLIED
+	limitview			(fullrange | offrange | auto)	#IMPLIED
 	 >
 	 
 <!ELEMENT area EMPTY>
