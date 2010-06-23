@@ -68,6 +68,14 @@
 		volume							CDATA							#IMPLIED
 		mute							(true | false)					"false"
 		'
+		>	
+		
+<!ENTITY % image_cube 
+		'url							CDATA							#IMPLIED
+		flip							(X | Y | XY | none)				"none"
+		rotate							CDATA							"0"
+		strip							CDATA							#IMPLIED
+		'
 		>
 
 <!ELEMENT krpano (image | preview | display | view | area | action | plugin | hotspot | events | control | style | progress | autorotate | contextmenu | memory | network | textstyle | data | include | scene | security | lensflareset )* > <!--    -->
@@ -84,7 +92,7 @@
 	name 				CDATA 							#REQUIRED
 	>	
 	
-<!ELEMENT image 		(level | mobile | tablet | qtvr)* >
+<!ELEMENT image 		(level | mobile | tablet | qtvr | sphere | left | front | right | back | up | down | cubestrip )* >
 <!ATTLIST image
 	type 				(SPHERE | CUBE | CUBESTRIP | ZOOMIFY | QTVR | PARTIAL | CYLINDER ) 	"SPHERE"
 	tiled 				(true | false) 									"false" 
@@ -257,6 +265,41 @@
 	maxmem				 			CDATA 							"350"
 	>
 
+<!ELEMENT sphere EMPTY>
+<!ATTLIST sphere 
+	url					 		CDATA 							#IMPLIED
+	>	
+	
+<!ELEMENT left EMPTY>
+<!ATTLIST left 
+	%image_cube;
+	>	
+<!ELEMENT front EMPTY>
+<!ATTLIST front 
+	%image_cube;
+	>	
+<!ELEMENT right EMPTY>
+<!ATTLIST right 
+	%image_cube;
+	>	
+<!ELEMENT back EMPTY>
+<!ATTLIST back 
+	%image_cube;
+	>	
+<!ELEMENT up EMPTY>
+<!ATTLIST up 
+	%image_cube;
+	>	
+<!ELEMENT down EMPTY>
+<!ATTLIST down 
+	%image_cube;
+	>
+
+<!ELEMENT cubestrip EMPTY>
+<!ATTLIST cubestrip 
+	url					 			CDATA 					#IMPLIED
+	>	
+	
 <!ELEMENT network EMPTY>
 <!ATTLIST network
 	downloadqueues				 			CDATA 					"4"
